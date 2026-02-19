@@ -17,16 +17,20 @@ document.addEventListener("DOMContentLoaded", () => {
       Object.entries(activities).forEach(([name, details]) => {
         const activityCard = document.createElement("div");
         activityCard.className = "activity-card";
-
-        const spotsLeft = details.max_participants - details.participants.length;
-
         activityCard.innerHTML = `
           <h4>${name}</h4>
-          <p>${details.description}</p>
-          <p><strong>Schedule:</strong> ${details.schedule}</p>
-          <p><strong>Availability:</strong> ${spotsLeft} spots left</p>
+          <p><strong>Description:</strong> ${details.description}</p>
+          <p><strong>Time:</strong> ${details.time}</p>
+          <p><strong>Capacity:</strong> ${details.participants.length}/${details.max_participants}</p>
+          <div class="participants-section">
+            <strong>Participants:</strong>
+            <ul>
+              ${details.participants.length > 0 
+                ? details.participants.map(email => `<li>${email}</li>`).join('')
+                : '<li class="no-participants">No participants yet</li>'}
+            </ul>
+          </div>
         `;
-
         activitiesList.appendChild(activityCard);
 
         // Add option to select dropdown
